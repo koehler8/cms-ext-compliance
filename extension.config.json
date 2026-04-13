@@ -1,0 +1,52 @@
+{
+  "$schema": "../../manifest.schema.json",
+  "slug": "compliance",
+  "version": "1.0.0",
+  "provider": {
+    "name": "Compliance Extension Suite",
+    "url": "https://github.com/koehler8",
+    "contact": "tucsonconsulting@gmail.com"
+  },
+  "entry": "./components/index.js",
+  "license": "MIT",
+  "components": [
+    {
+      "name": "Cookies",
+      "label": "Cookie Policy Content",
+      "description": "Rich-text block for cookie policy disclosures.",
+      "module": "./components/Cookies.vue",
+      "configKey": "cookies",
+      "allowedPages": ["cookies"]
+    },
+    {
+      "name": "Terms",
+      "label": "Terms of Service Content",
+      "description": "Terms of service detail view.",
+      "module": "./components/Terms.vue",
+      "configKey": "terms",
+      "allowedPages": ["terms"]
+    },
+    {
+      "name": "Privacy",
+      "label": "Privacy Policy Content",
+      "description": "Detailed privacy policy layout with sections and metadata.",
+      "module": "./components/Privacy.vue",
+      "configKey": "privacy",
+      "allowedPages": ["privacy"]
+    },
+    {
+      "name": "Legal",
+      "label": "Legal Footer Bar",
+      "description": "Copyright notice and links to terms, privacy, and cookie policy pages.",
+      "module": "./components/Legal.vue",
+      "configKey": "legal"
+    },
+    {
+      "name": "CookieConsent",
+      "label": "Cookie Consent Banner",
+      "description": "Fixed-position cookie consent banner with accept/decline controls.",
+      "module": "./components/CookieConsent.vue",
+      "configKey": "cookieConsent"
+    }
+  ]
+}

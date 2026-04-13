@@ -1,0 +1,29 @@
+{
+  "name": "@koehler8/cms-ext-compliance",
+  "version": "1.1.2",
+  "description": "Compliance extension for @koehler8/cms — Cookie, Terms, and Privacy policy pages",
+  "license": "MIT",
+  "type": "module",
+  "author": "Chris Koehler",
+  "homepage": "https://github.com/koehler8/cms-ext-compliance",
+  "exports": {
+    ".": "./index.js",
+    "./config": "./extension.config.json"
+  },
+  "files": [
+    "index.js",
+    "extension.config.json",
+    "components",
+    "README.md"
+  ],
+  "peerDependencies": {
+    "@koehler8/cms": "^1.0.0-beta.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/koehler8/cms-ext-compliance.git"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  }
+}
