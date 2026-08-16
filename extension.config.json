@@ -16,7 +16,9 @@
       "description": "Rich-text block for cookie policy disclosures.",
       "module": "./components/Cookies.vue",
       "configKey": "cookies",
-      "allowedPages": ["cookies"]
+      "allowedPages": [
+        "cookies"
+      ]
     },
     {
       "name": "Terms",
@@ -24,7 +26,9 @@
       "description": "Terms of service detail view.",
       "module": "./components/Terms.vue",
       "configKey": "terms",
-      "allowedPages": ["terms"]
+      "allowedPages": [
+        "terms"
+      ]
     },
     {
       "name": "Privacy",
@@ -32,12 +36,14 @@
       "description": "Detailed privacy policy layout with sections and metadata.",
       "module": "./components/Privacy.vue",
       "configKey": "privacy",
-      "allowedPages": ["privacy"]
+      "allowedPages": [
+        "privacy"
+      ]
     },
     {
       "name": "Legal",
       "label": "Legal Footer Bar",
-      "description": "Copyright notice and links to terms, privacy, and cookie policy pages.",
+      "description": "Copyright notice and links to terms, privacy, and cookie policy pages. Company name via content.legal.company (defaults to site.title); whole line via content.legal.copyright.",
       "module": "./components/Legal.vue",
       "configKey": "legal"
     },

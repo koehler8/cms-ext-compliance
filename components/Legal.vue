@@ -19,11 +19,36 @@
 import { computed, inject, ref } from 'vue';
 
 const injectedSiteData = inject('siteData', ref({}));
+const pageContent = inject('pageContent', ref({}));
 
-const siteName = computed(() => injectedSiteData.value?.site?.title || '');
+// Content block for this component (configKey "legal"), resolved page-first
+// then shared, matching how the bundled components resolve theirs.
+const legal = computed(() => {
+  const fromPage = pageContent.value?.legal;
+  if (fromPage && typeof fromPage === 'object') return fromPage;
+  const fromShared = injectedSiteData.value?.shared?.content?.legal;
+  return (fromShared && typeof fromShared === 'object') ? fromShared : {};
+});
+
+const trimmed = (value) => (typeof value === 'string' && value.trim() ? value.trim() : '');
+
+// The legal entity in the copyright line. `site.title` is a reasonable default
+// but a poor one for sites whose title is descriptive rather than a name — it
+// produced lines like "© 2026 Acme — the best widgets anywhere - All rights
+// reserved." Sites set `content.legal.company` to the entity name instead of
+// distorting `site.title`, which also feeds <title>, the logo alt, and JSON-LD.
+const companyName = computed(
+  () => trimmed(legal.value?.company) || trimmed(injectedSiteData.value?.site?.title),
+);
+
 const currentYear = new Date().getFullYear();
+
+// `content.legal.copyright` replaces the generated line outright — the escape
+// hatch for jurisdictions or entities whose notice doesn't fit the template.
 const copyrightText = computed(() => {
-  const brand = siteName.value ? ` ${siteName.value}` : '';
+  const override = trimmed(legal.value?.copyright);
+  if (override) return override;
+  const brand = companyName.value ? ` ${companyName.value}` : '';
   return `© ${currentYear}${brand} - All rights reserved.`;
 });
 

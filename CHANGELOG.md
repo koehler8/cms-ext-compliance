@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+
+### Fixed
+
+- **`Legal` no longer hardcodes `site.title` into the copyright line.** The
+  entity name was read straight from `site.title` with no way to override it,
+  so a site whose title is descriptive rather than a name rendered its whole
+  tagline inside the notice — e.g. `© 2026 Acme — the best widgets anywhere -
+  All rights reserved.` The only workaround was shortening `site.title`, which
+  also feeds `<title>`, the logo alt text, and the JSON-LD organization.
+
+  Two new content keys, both resolved page-first then shared:
+  `content.legal.company` sets the entity name (still falling back to
+  `site.title`, so existing sites are unchanged), and `content.legal.copyright`
+  replaces the generated line outright for notices that don't fit the template.
+
 ## 1.0.0
 
 First stable release, cut alongside `@koehler8/cms` 1.0.0.
