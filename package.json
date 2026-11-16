@@ -36,5 +36,8 @@
   "repository": {
     "type": "git",
     "url": "git+https://github.com/koehler8/cms-ext-compliance.git"
+  },
+  "devDependencies": {
+    "@koehler8/cms": "^1.5.4"
   }
 }
