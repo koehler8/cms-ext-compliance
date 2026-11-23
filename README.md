@@ -50,6 +50,11 @@ First-party bundle that keeps the legal surfaces (cookies, terms of service, and
   }
   ```
 - Sections accept HTML strings and simple arrays (`bullets`, `listItems`) so CMS tooling can render rich copy without new Vue components.
+- A section can carry an `id`, which makes it linkable:
+  ```json
+  { "id": "refunds", "title": "Refunds and cancellations", "paragraphs": ["..."] }
+  ```
+  renders `<section id="refunds">`, so `/terms/#refunds` opens there. No `id` in content means no `id` on the page; one is never derived from the title. Keep ids unique within a page and treat them as permanent, since other pages link to them. `--legal-section-scroll-margin` (default `1.5rem`) sets the space left above a section opened this way.
 - Route metadata (`pages.privacy.meta.title`, etc.) still lives beside the page definition just like any core component page.
 
 ## Legal bar

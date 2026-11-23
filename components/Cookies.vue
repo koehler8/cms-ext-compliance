@@ -57,6 +57,7 @@
             <section
               v-for="(section, index) in customSections"
               :key="section.id || index"
+              :id="section.anchor || undefined"
               class="legal-section"
             >
               <h3 v-if="section.title">{{ section.title }}</h3>
@@ -202,6 +203,15 @@ const customBody = computed(() =>
   typeof customContent.value?.body === 'string' ? customContent.value.body : '',
 );
 
+// A section is addressable (`/terms#refunds`) only when the content gave it an
+// `id`. The title is never used: an address derived from a heading would
+// change whenever the heading was reworded, and break every link to it.
+function explicitSectionId(value) {
+  if (typeof value !== 'string') return null;
+  const id = value.trim();
+  return id && !/\s/.test(id) ? id : null;
+}
+
 function normalizeSectionItems(sections) {
   if (!Array.isArray(sections)) return [];
   return sections
@@ -222,6 +232,7 @@ function normalizeSectionItems(sections) {
       }
       return {
         id: section.id || title || `section-${index}`,
+        anchor: explicitSectionId(section.id),
         title,
         summary,
         body: body || html,
@@ -236,6 +247,21 @@ const customSections = computed(() => normalizeSectionItems(customContent.value?
 const hasCustomContent = computed(
   () => Boolean(customIntro.value || customBody.value || customSections.value.length),
 );
+
+// Vertex CMS rebuilds a page's components in the browser as it loads, which
+// loses the place the browser took from the address's `#id`: a link to a
+// section would open at the top of the page. When the address names one of
+// this document's own sections, go there once the section is in place.
+onMounted(() => {
+  let target = '';
+  try {
+    target = decodeURIComponent(window.location.hash.slice(1));
+  } catch {
+    return;
+  }
+  if (!target || !customSections.value.some((section) => section.anchor === target)) return;
+  document.getElementById(target)?.scrollIntoView();
+});
 
 const consentStatusText = computed(() => {
   switch (consentStatus.value) {
@@ -394,6 +420,13 @@ onUnmounted(() => {
   gap: 1rem;
   line-height: 1.7;
   color: inherit;
+}
+
+/* A section opened by its address (`#id`) lands clear of a sticky site header.
+   Vertex CMS already offsets the page (`html { scroll-padding-top }`); this
+   adds breathing room, and a site with a taller header sets the variable. */
+.legal-section {
+  scroll-margin-top: var(--legal-section-scroll-margin, 1.5rem);
 }
 
 .legal-content p {
