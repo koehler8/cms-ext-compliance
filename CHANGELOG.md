@@ -1,5 +1,27 @@
 # Changelog
 
+## 1.2.0
+
+### Added
+
+- **A section of `Terms`, `Privacy` or `Cookies` can be linked to directly.**
+  Give a section an `id` in content (`content.terms.sections[3].id:
+  "refunds"`) and it renders as the section's `id` attribute, so
+  `/terms/#refunds` opens at that section. A section with no `id` gets no
+  address: one is never derived from the title, because a link built on a
+  heading would break the day the heading was reworded. An `id` that is not a
+  string, is blank or contains whitespace is ignored. Existing sites render
+  exactly as before.
+- **A link to a section opens at that section on first load too.** Vertex CMS
+  rebuilds a page's components in the browser as it loads, which loses the
+  place the browser took from the address, so `/terms/#refunds` opened at the
+  top of the page. Each document now goes to the section the address names,
+  once it is mounted, when that section is one of its own.
+- **`--legal-section-scroll-margin`** (default `1.5rem`): the space left above
+  a section opened by its address, on top of the page offset Vertex CMS
+  already applies for its sticky header. Set it on a site whose header is
+  taller than that offset.
+
 ## 1.1.0
 
 ### Fixed
